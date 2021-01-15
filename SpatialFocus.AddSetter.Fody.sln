@@ -1,0 +1,74 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{609BE925-2803-4248-A7F9-659C1E0F9232}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		README.md = README.md
+		SpatialFocus.AddSetter.Fody.sln.DotSettings = SpatialFocus.AddSetter.Fody.sln.DotSettings
+		stylecop.json = stylecop.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpatialFocus.AddSetter.Fody", "src\SpatialFocus.AddSetter.Fody\SpatialFocus.AddSetter.Fody.csproj", "{81703F57-025F-42C4-AE8B-568E2F56CCE2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{674F705E-E459-490B-B536-3F750485AE33}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpatialFocus.AddSetter.TestAssembly", "src\SpatialFocus.AddSetter.TestAssembly\SpatialFocus.AddSetter.TestAssembly.csproj", "{8DBE75D4-F0FA-4412-8397-9A6B6978229F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpatialFocus.AddSetter.Tests", "src\SpatialFocus.AddSetter.Tests\SpatialFocus.AddSetter.Tests.csproj", "{73E41A4A-EAC4-4E6D-84BB-14974366E7BE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpatialFocus.AddSetter.SmokeTest", "src\SpatialFocus.AddSetter.SmokeTest\SpatialFocus.AddSetter.SmokeTest.csproj", "{C47814DC-272E-4FB8-A97C-2B6C75F60C76}"
+	ProjectSection(ProjectDependencies) = postProject
+		{81703F57-025F-42C4-AE8B-568E2F56CCE2} = {81703F57-025F-42C4-AE8B-568E2F56CCE2}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpatialFocus.AddSetter", "src\SpatialFocus.AddSetter\SpatialFocus.AddSetter.csproj", "{88A8C843-A479-42B8-AAF6-8F816C660515}"
+	ProjectSection(ProjectDependencies) = postProject
+		{81703F57-025F-42C4-AE8B-568E2F56CCE2} = {81703F57-025F-42C4-AE8B-568E2F56CCE2}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81703F57-025F-42C4-AE8B-568E2F56CCE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81703F57-025F-42C4-AE8B-568E2F56CCE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81703F57-025F-42C4-AE8B-568E2F56CCE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81703F57-025F-42C4-AE8B-568E2F56CCE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DBE75D4-F0FA-4412-8397-9A6B6978229F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DBE75D4-F0FA-4412-8397-9A6B6978229F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DBE75D4-F0FA-4412-8397-9A6B6978229F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DBE75D4-F0FA-4412-8397-9A6B6978229F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73E41A4A-EAC4-4E6D-84BB-14974366E7BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73E41A4A-EAC4-4E6D-84BB-14974366E7BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73E41A4A-EAC4-4E6D-84BB-14974366E7BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73E41A4A-EAC4-4E6D-84BB-14974366E7BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C47814DC-272E-4FB8-A97C-2B6C75F60C76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C47814DC-272E-4FB8-A97C-2B6C75F60C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C47814DC-272E-4FB8-A97C-2B6C75F60C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C47814DC-272E-4FB8-A97C-2B6C75F60C76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88A8C843-A479-42B8-AAF6-8F816C660515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88A8C843-A479-42B8-AAF6-8F816C660515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88A8C843-A479-42B8-AAF6-8F816C660515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88A8C843-A479-42B8-AAF6-8F816C660515}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{81703F57-025F-42C4-AE8B-568E2F56CCE2} = {674F705E-E459-490B-B536-3F750485AE33}
+		{8DBE75D4-F0FA-4412-8397-9A6B6978229F} = {674F705E-E459-490B-B536-3F750485AE33}
+		{73E41A4A-EAC4-4E6D-84BB-14974366E7BE} = {674F705E-E459-490B-B536-3F750485AE33}
+		{C47814DC-272E-4FB8-A97C-2B6C75F60C76} = {674F705E-E459-490B-B536-3F750485AE33}
+		{88A8C843-A479-42B8-AAF6-8F816C660515} = {674F705E-E459-490B-B536-3F750485AE33}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1a3946bb-e6d6-4999-932a-807a80bc0cdb}
+	EndGlobalSection
+EndGlobal

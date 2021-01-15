@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
+		<Version>1.0.0-rc1</Version>
+		<Title>A add setter Fody plugin.</Title>
+		<Authors>Dresel,pergerch</Authors>
+		<Company>SpatialFocus</Company>
+		<Description>A add setter Fody plugin.</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageTags>ILWeaving, Fody, Cecil</PackageTags>
+		<PackageOutputPath>$(SolutionDir)\.nuget</PackageOutputPath>
+		<PackageProjectUrl>https://github.com/SpatialFocus/AddSetter.Fody</PackageProjectUrl>
+		<PackageIconUrl>https://raw.githubusercontent.com/SpatialFocus/AddSetter.Fody/master/docs/icon.png</PackageIconUrl>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/SpatialFocus/AddSetter.Fody.git</RepositoryUrl>
+
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Fody" Version="6.3.0" PrivateAssets="none" />
+		<PackageReference Include="FodyPackaging" Version="6.3.0" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+	</ItemGroup>
+
+</Project>
