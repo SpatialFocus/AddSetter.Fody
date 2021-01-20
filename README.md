@@ -2,9 +2,11 @@
 
 An add setter [Fody](https://github.com/Fody/Home/) plugin.
 
-[![Nuget](https://img.shields.io/nuget/v/SpatialFocus.AddSetter.Fody)](https://www.nuget.org/packages/SpatialFocus.MethodCache.Fody/)
+[![Nuget](https://img.shields.io/nuget/v/SpatialFocus.AddSetter.Fody)](https://www.nuget.org/packages/SpatialFocus.AddSetter.Fody/)
 [![Build & Publish](https://github.com/SpatialFocus/AddSetter.Fody/workflows/Build%20&%20Publish/badge.svg)](https://github.com/SpatialFocus/AddSetter.Fody/actions)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSpatialFocus%2FAddSetter.Fody.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FSpatialFocus%2FAddSetter.Fody?ref=badge_shield)
+
+Adds private setter to properties. To be used for example in combination with read-only properties in EF Core, that would otherwise [not be mapped by convention](https://docs.microsoft.com/en-us/ef/core/modeling/constructors#read-only-properties).
 
 ## Usage
 
@@ -30,6 +32,103 @@ Add `<SpatialFocus.AddSetter/>` to [FodyWeavers.xml](https://github.com/Fody/Hom
     <SpatialFocus.AddSetter/>
 </Weavers>
 ```
+
+## Overview
+
+Before code:
+
+```csharp
+public class Person
+{
+    public int Id { get; }
+
+    public string FirstName { get; }
+
+    public string LastName { get; }
+}
+```
+
+What gets compiled
+
+```csharp
+public class Person
+{
+    public int Id { get; private set; }
+
+    public string FirstName { get; private set; }
+
+    public string LastName { get; private set; }
+}
+```
+
+## Include or exclude namespaces
+
+These config options are configured by modifying the `SpatialFocus.AddSetter` node in FodyWeavers.xml
+
+### ExcludeNamespaces
+
+A list of namespaces to exclude.
+
+Can take two forms.
+
+As an element with items delimited by a newline.
+
+```xml
+<SpatialFocus.AddSetter>
+    <ExcludeNamespaces>
+        Foo
+        Bar
+    </ExcludeNamespaces>
+</SpatialFocus.AddSetter>
+```
+
+Or as a attribute with items delimited by a pipe `|`.
+
+```xml
+<SpatialFocus.AddSetter ExcludeNamespaces='Foo|Bar'/>
+```
+
+### IncludeNamespaces
+
+A list of namespaces to include.
+
+Can take two forms.
+
+As an element with items delimited by a newline.
+
+```xml
+<SpatialFocus.AddSetter>
+    <IncludeNamespaces>
+        Foo
+        Bar
+    </IncludeNamespaces>
+</SpatialFocus.AddSetter>
+```
+
+Or as a attribute with items delimited by a pipe `|`.
+
+```xml
+<SpatialFocus.AddSetter IncludeNamespaces='Foo|Bar'/>
+```
+
+### Wildcard support
+
+Use `*` at the beginning or at the end of an in- or exclude for wildcard matching.
+
+To include the namespace and all sub-namespaces, simply define it like this:
+
+```xml
+<SpatialFocus.AddSetter>
+    <IncludeNamespaces>
+        Foo
+        Foo.*
+    </IncludeNamespaces>
+</SpatialFocus.AddSetter>
+```
+
+### Combination of exclude and include
+
+You can combine excludes and includes, excludes overrule the includes if both match.
 
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSpatialFocus%2FAddSetter.Fody.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FSpatialFocus%2FAddSetter.Fody?ref=badge_large)
