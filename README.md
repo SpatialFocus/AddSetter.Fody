@@ -14,7 +14,7 @@ See also [Fody usage](https://github.com/Fody/Home/blob/master/pages/usage.md).
 
 ### NuGet installation
 
-Install the [SpatialFocus.MethodCache.Fody NuGet package](https://nuget.org/packages/SpatialFocus.AddSetter.Fody/) and update the [Fody NuGet package](https://nuget.org/packages/Fody/):
+Install the [SpatialFocus.AddSetter.Fody NuGet package](https://nuget.org/packages/SpatialFocus.AddSetter.Fody/) and update the [Fody NuGet package](https://nuget.org/packages/Fody/):
 
 ```powershell
 PM> Install-Package Fody
