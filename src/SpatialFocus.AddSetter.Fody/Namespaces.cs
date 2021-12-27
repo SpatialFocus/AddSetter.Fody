@@ -8,6 +8,7 @@ namespace SpatialFocus.AddSetter.Fody
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Xml.Linq;
+	using global::Fody;
 	using Mono.Cecil;
 
 	public class Namespaces
@@ -19,6 +20,11 @@ namespace SpatialFocus.AddSetter.Fody
 		{
 			ModuleWeaver = moduleWeaver;
 
+			if (TryReadBooleanAttribute(moduleWeaver.Config, "DoNotIncludeByDefault") == true)
+			{
+				DoNotIncludeByDefault = true;
+			}
+
 			ReadIncludes();
 			ReadExcludes();
 		}
@@ -27,11 +33,15 @@ namespace SpatialFocus.AddSetter.Fody
 
 		public IReadOnlyCollection<NamespaceMatcher> IncludeNamespaces => this.includeNamespaces.ToList().AsReadOnly();
 
+		public bool DoNotIncludeByDefault { get; protected set; }
+
 		protected ModuleWeaver ModuleWeaver { get; }
 
 		public bool ShouldIncludeType(TypeDefinition typeDefinition)
 		{
-			return (!this.includeNamespaces.Any() || this.includeNamespaces.Any(x => x.Match(typeDefinition))) &&
+			bool includeByDefault = !this.includeNamespaces.Any() && !DoNotIncludeByDefault;
+
+			return (includeByDefault || this.includeNamespaces.Any(x => x.Match(typeDefinition))) &&
 				!this.excludeNamespaces.Any(x => x.Match(typeDefinition));
 		}
 
@@ -42,8 +52,8 @@ namespace SpatialFocus.AddSetter.Fody
 			if (excludeNamespacesAttribute != null)
 			{
 				foreach (string item in excludeNamespacesAttribute.Value.Split('|')
-					.Select(x => x.Trim())
-					.Where(x => !string.IsNullOrEmpty(x)))
+							.Select(x => x.Trim())
+							.Where(x => !string.IsNullOrEmpty(x)))
 				{
 					this.excludeNamespaces.Add(new NamespaceMatcher(item));
 				}
@@ -54,8 +64,8 @@ namespace SpatialFocus.AddSetter.Fody
 			if (excludeNamespacesElement != null)
 			{
 				foreach (string item in excludeNamespacesElement.Value.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries)
-					.Select(x => x.Trim())
-					.Where(x => !string.IsNullOrEmpty(x)))
+							.Select(x => x.Trim())
+							.Where(x => !string.IsNullOrEmpty(x)))
 				{
 					this.excludeNamespaces.Add(new NamespaceMatcher(item));
 				}
@@ -69,8 +79,8 @@ namespace SpatialFocus.AddSetter.Fody
 			if (includeNamespacesAttribute != null)
 			{
 				foreach (string item in includeNamespacesAttribute.Value.Split('|')
-					.Select(x => x.Trim())
-					.Where(x => !string.IsNullOrEmpty(x)))
+							.Select(x => x.Trim())
+							.Where(x => !string.IsNullOrEmpty(x)))
 				{
 					this.includeNamespaces.Add(new NamespaceMatcher(item));
 				}
@@ -81,12 +91,35 @@ namespace SpatialFocus.AddSetter.Fody
 			if (includeNamespacesElement != null)
 			{
 				foreach (string item in includeNamespacesElement.Value.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries)
-					.Select(x => x.Trim())
-					.Where(x => !string.IsNullOrEmpty(x)))
+							.Select(x => x.Trim())
+							.Where(x => !string.IsNullOrEmpty(x)))
 				{
 					this.includeNamespaces.Add(new NamespaceMatcher(item));
 				}
 			}
+		}
+
+		private bool? TryReadBooleanAttribute(XElement config, string attributeName)
+		{
+			XAttribute attribute = config.Attribute(attributeName);
+
+			if (attribute == null)
+			{
+				return null;
+			}
+
+			if (string.Compare(attribute.Value, "true", StringComparison.OrdinalIgnoreCase) == 0)
+			{
+				return true;
+			}
+
+			if (string.Compare(attribute.Value, "false", StringComparison.OrdinalIgnoreCase) == 0)
+			{
+				return false;
+			}
+
+			string message = $"Could not convert {attributeName}='{attribute.Value}' to a boolean. Only 'true' or 'false' are allowed.";
+			throw new WeavingException(message);
 		}
 	}
 }

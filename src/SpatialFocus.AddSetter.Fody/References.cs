@@ -15,6 +15,8 @@ namespace SpatialFocus.AddSetter.Fody
 			ModuleWeaver = moduleWeaver;
 		}
 
+		public TypeReference AddSetterAttributeType { get; set; }
+
 		public TypeReference CompilerGeneratedAttributeType { get; set; }
 
 		protected ModuleWeaver ModuleWeaver { get; }
@@ -27,6 +29,9 @@ namespace SpatialFocus.AddSetter.Fody
 			}
 
 			References references = new References(moduleWeaver);
+
+			TypeDefinition addSetterAttribute = moduleWeaver.FindTypeDefinition("SpatialFocus.AddSetter.AddSetterAttribute");
+			references.AddSetterAttributeType = moduleWeaver.ModuleDefinition.ImportReference(addSetterAttribute);
 
 			TypeDefinition compilerGeneratedAttributeType = moduleWeaver.FindTypeDefinition(typeof(CompilerGeneratedAttribute).FullName);
 			references.CompilerGeneratedAttributeType = moduleWeaver.ModuleDefinition.ImportReference(compilerGeneratedAttributeType);

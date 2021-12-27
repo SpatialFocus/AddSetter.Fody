@@ -21,7 +21,7 @@ namespace SpatialFocus.AddSetter.Fody
 
 			foreach (TypeDefinition typeDefinition in ModuleDefinition.Types)
 			{
-				if (!namespaces.ShouldIncludeType(typeDefinition))
+				if (!typeDefinition.HasAddSetterAttribute(references) && !namespaces.ShouldIncludeType(typeDefinition))
 				{
 					continue;
 				}
@@ -39,6 +39,7 @@ namespace SpatialFocus.AddSetter.Fody
 		{
 			yield return "netstandard";
 			yield return "mscorlib";
+			yield return "SpatialFocus.AddSetter";
 		}
 
 		private void TryWeaveSetterForProperty(TypeDefinition typeDefinition, PropertyDefinition propertyDefinition, References references)

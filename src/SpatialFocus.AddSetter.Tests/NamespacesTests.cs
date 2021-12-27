@@ -13,6 +13,36 @@ namespace SpatialFocus.AddSetter.Tests
 	public class NamespacesTests
 	{
 		[Fact]
+		public void DoNotIncludeByDefaultFalse()
+		{
+			XElement xElement = XElement.Parse("<AddSetter DoNotIncludeByDefault='False' />");
+			ModuleWeaver moduleWeaver = new ModuleWeaver { Config = xElement };
+			Namespaces namespaces = new Namespaces(moduleWeaver);
+
+			Assert.False(namespaces.DoNotIncludeByDefault);
+		}
+
+		[Fact]
+		public void DoNotIncludeByDefaultNotSet()
+		{
+			XElement xElement = XElement.Parse("<AddSetter />");
+			ModuleWeaver moduleWeaver = new ModuleWeaver { Config = xElement };
+			Namespaces namespaces = new Namespaces(moduleWeaver);
+
+			Assert.False(namespaces.DoNotIncludeByDefault);
+		}
+
+		[Fact]
+		public void DoNotIncludeByDefaultTrue()
+		{
+			XElement xElement = XElement.Parse("<AddSetter DoNotIncludeByDefault='True' />");
+			ModuleWeaver moduleWeaver = new ModuleWeaver { Config = xElement };
+			Namespaces namespaces = new Namespaces(moduleWeaver);
+
+			Assert.True(namespaces.DoNotIncludeByDefault);
+		}
+
+		[Fact]
 		public void ExcludeNamespacesAttribute()
 		{
 			XElement xElement = XElement.Parse(@"
@@ -144,7 +174,7 @@ Foo.Bar
 		[Fact]
 		public void ShouldIncludeTypeIfNotExcluded()
 		{
-			XElement xElement = XElement.Parse("<AddSetter ExcludeNamespaces='Foo.Bar*'/>");
+			XElement xElement = XElement.Parse("<AddSetter ExcludeNamespaces='Foo.Bar*' />");
 
 			ModuleWeaver moduleWeaver = new ModuleWeaver { Config = xElement, };
 
@@ -182,6 +212,20 @@ Foo.Bar
 			Assert.True(namespaces.ShouldIncludeType(new TypeDefinition(string.Empty, "Hugo", TypeAttributes.Class)));
 			Assert.True(namespaces.ShouldIncludeType(new TypeDefinition("Foo", "Hugo", TypeAttributes.Class)));
 			Assert.True(namespaces.ShouldIncludeType(new TypeDefinition("Foo1", "Hugo", TypeAttributes.Class)));
+		}
+
+		[Fact]
+		public void ShouldNotIncludeTypeByDefault()
+		{
+			XElement xElement = XElement.Parse("<AddSetter DoNotIncludeByDefault='True' />");
+
+			ModuleWeaver moduleWeaver = new ModuleWeaver { Config = xElement, };
+
+			Namespaces namespaces = new Namespaces(moduleWeaver);
+
+			Assert.False(namespaces.ShouldIncludeType(new TypeDefinition(string.Empty, "Hugo", TypeAttributes.Class)));
+			Assert.False(namespaces.ShouldIncludeType(new TypeDefinition("Foo", "Hugo", TypeAttributes.Class)));
+			Assert.False(namespaces.ShouldIncludeType(new TypeDefinition("Foo1", "Hugo", TypeAttributes.Class)));
 		}
 	}
 }

@@ -4,6 +4,8 @@
 
 namespace SpatialFocus.AddSetter.Fody
 {
+	using System;
+	using System.Linq;
 	using Mono.Cecil;
 
 	public static class TypeDefinitionExtension
@@ -16,6 +18,24 @@ namespace SpatialFocus.AddSetter.Fody
 			}
 
 			return type.Namespace;
+		}
+
+		public static bool HasAddSetterAttribute(this TypeDefinition typeDefinition, References references)
+		{
+			if (typeDefinition == null)
+			{
+				throw new ArgumentNullException(nameof(typeDefinition));
+			}
+
+			if (references == null)
+			{
+				throw new ArgumentNullException(nameof(references));
+			}
+
+			TypeReference addSetterAttributeType = references.AddSetterAttributeType.Resolve();
+
+			return typeDefinition.CustomAttributes.Any(classAttribute =>
+				classAttribute.AttributeType.Resolve().Equals(addSetterAttributeType));
 		}
 	}
 }
