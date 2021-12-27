@@ -6,7 +6,7 @@ An add setter [Fody](https://github.com/Fody/Home/) plugin.
 [![Build & Publish](https://github.com/SpatialFocus/AddSetter.Fody/workflows/Build%20&%20Publish/badge.svg)](https://github.com/SpatialFocus/AddSetter.Fody/actions)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSpatialFocus%2FAddSetter.Fody.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FSpatialFocus%2FAddSetter.Fody?ref=badge_shield)
 
-Adds private setter to properties. To be used for example in combination with read-only properties in EF Core, that would otherwise [not be mapped by convention](https://docs.microsoft.com/en-us/ef/core/modeling/constructors#read-only-properties).
+Adds private setter to properties. To be used for example in combination with read-only properties in EF Core, that would otherwise [not be mapped by convention](https://docs.microsoft.com/en-us/ef/core/modeling/constructors#read-only-properties). Read more in our [blog post](https://www.spatial-focus.net/blog/removing-infrastructure-information-from-domain-code-3).
 
 ## Usage
 
@@ -58,6 +58,30 @@ public class Person
     public string FirstName { get; private set; }
 
     public string LastName { get; private set; }
+}
+```
+
+# Configuration Options
+
+## Do not include by default
+
+If no include or exclude namespaces are defined, all classes in the package are __included by default__. To change this behavior, add the following attribute to the `SpatialFocus.AddSetter` node in FodyWeavers.
+
+```xml
+<Weavers>
+    <SpatialFocus.AddSetter DoNotIncludeByDefault='True'/>
+</Weavers>
+```
+
+## Include types with an attribute
+
+To include a specific class you can mark it with a `AddSetter`. This works in both of the following cases, when either the `DoNotIncludeByDefault` setting is turned on, or the namespace is excluded.
+
+```csharp
+[AddSetter]
+public class ClassToInclude
+{
+    ...
 }
 ```
 
@@ -128,7 +152,7 @@ To include the namespace and all sub-namespaces, simply define it like this:
 
 ### Combination of exclude and include
 
-You can combine excludes and includes, excludes overrule the includes if both match.
+You can combine excludes and includes, excludes overrule the includes if both match. But classes with an explicit `[AddSetter]` attribute overrule the excludes.
 
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSpatialFocus%2FAddSetter.Fody.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FSpatialFocus%2FAddSetter.Fody?ref=badge_large)

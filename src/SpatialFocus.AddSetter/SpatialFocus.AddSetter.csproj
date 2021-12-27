@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
-		<Version>1.0.0-rc1</Version>
+		<Version>1.1.0</Version>
 		<Title>A add setter Fody plugin.</Title>
 		<Authors>Dresel,pergerch</Authors>
 		<Company>SpatialFocus</Company>
